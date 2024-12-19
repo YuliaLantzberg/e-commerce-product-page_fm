@@ -106,10 +106,16 @@ body {
 	font-family: "Kumbh Sans", serif;
 	width: 100vw;
 	overflow-x: hidden;
+	display: grid;
+	place-content: center;
+	@media (min-width: 60rem) {
+		height: 100vh;
+	}
 }
 
 main {
 	position: relative;
+	max-width: 69.375rem;
 }
 
 .btn {
@@ -139,10 +145,20 @@ main {
 .nav {
 	.flex(center, space-between, row);
 	margin: 1.188rem 1.5rem;
+	@media (min-width: 60rem) {
+		position: sticky;
+		top: 0;
+		overflow: hidden;
+		margin: 0;
+	}
 	&__left {
 		.flex(center, center, row);
 		gap: 1rem;
-
+		&-navIcon {
+			@media (min-width: 60rem) {
+				display: none;
+			}
+		}
 		.menu__list {
 			.flex(flex-start, flex-start, column);
 			gap: 3.25rem;
@@ -155,6 +171,11 @@ main {
 			overflow-x: hidden;
 			padding: 2rem 1rem;
 			display: none;
+			@media (min-width: 60rem) {
+				display: flex;
+				background-color: transparent;
+				position: static;
+			}
 			.menu {
 				.flex(flex-start, flex-start, column);
 				gap: 1.25rem;
@@ -162,6 +183,9 @@ main {
 				font-weight: @fw-bold;
 				font-size: 1.125rem;
 				padding: 0 1rem;
+				@media (min-width: 60rem) {
+					.flex(flex-start, center, row);
+				}
 				a {
 					text-decoration: none;
 					color: @blue-900;
@@ -195,12 +219,27 @@ main {
 			.flex(center, center, row);
 			top: -0.3rem;
 			left: 0.7rem;
+			display: none;
 		}
+	}
+}
+
+.delimiter {
+	display: none;
+	@media (min-width: 60rem) {
+		position: sticky;
+		top: 0;
+		overflow: hidden;
+		display: block;
+		margin-bottom: 2rem;
 	}
 }
 
 // CAROUSEL STYLES
 .carousel {
+	@media (min-width: 60rem) {
+		display: none;
+	}
 	&-view {
 		position: relative;
 		&__btn {
@@ -263,26 +302,43 @@ main {
 	display: grid;
 	padding: 1.5rem;
 	gap: 1rem;
+	@media (min-width: 60rem) {
+		width: 50%;
+		gap: 0;
+	}
 	.company-name {
 		text-transform: uppercase;
 		font-weight: @fw-bold;
-		font-size: 0.75rem;
+		font-size: clamp(0.75rem, 1.44vw, 0.813rem);
 		letter-spacing: 1.85px;
 		color: @grayish-blue-500;
+		@media (min-width: 60rem) {
+			margin-bottom: 1.5rem;
+		}
 	}
 	.product-name {
 		color: @blue-900;
 		font-weight: @fw-bold;
-		font-size: 1.75rem;
+		font-size: clamp(1.75rem, 4.88vw, 2.75rem);
 		line-height: 1.14;
+		@media (min-width: 60rem) {
+			margin-bottom: 2rem;
+		}
 	}
 	.description {
 		color: @grayish-blue-500;
-		font-size: 0.938rem;
+		font-size: clamp(0.938rem, 1.77vw, 1rem);
 		line-height: 1.67;
+		@media (min-width: 60rem) {
+			margin-bottom: 1.5rem;
+		}
 	}
 	.price {
 		.flex(center, space-between, row);
+		@media (min-width: 60rem) {
+			.flex(flex-start, flex-start, column);
+			margin-bottom: 2rem;
+		}
 		&__current {
 			.flex(center, center, row);
 			gap: 1rem;
@@ -305,39 +361,48 @@ main {
 		}
 	}
 
-	.quantity {
-		position: relative;
-		&__btn {
-			position: absolute;
-			border: none;
-			background-color: transparent;
-			top: 0.65rem;
-			font-size: 1.5rem;
-			font-weight: bold;
-			color: @orange-500;
-			&--plus {
-				right: 1rem;
-			}
-			&--minus {
-				left: 1rem;
-			}
-		}
-		&__num {
-			width: 100%;
-			text-align: center;
-			padding: 1.25rem 1.5rem;
-			border: none;
-			background-color: @grayish-blue-100;
-			font-weight: @fw-bold;
-		}
-	}
-
-	.btn {
-		.flex(center, center, row);
+	form {
+		.flex(center, center, column);
 		gap: 1rem;
-		svg {
-			path {
-				fill: @blue-900;
+		@media (min-width: 60rem) {
+			flex-direction: row;
+		}
+		.quantity {
+			position: relative;
+			width: 100%;
+			&__btn {
+				position: absolute;
+				border: none;
+				background-color: transparent;
+				top: 0.65rem;
+				font-size: 1.5rem;
+				font-weight: bold;
+				color: @orange-500;
+				&--plus {
+					right: 1rem;
+				}
+				&--minus {
+					left: 1rem;
+				}
+			}
+			&__num {
+				width: 100%;
+				text-align: center;
+				padding: 1.25rem 1.5rem;
+				border: none;
+				background-color: @grayish-blue-100;
+				font-weight: @fw-bold;
+			}
+		}
+
+		.btn {
+			.flex(center, center, row);
+			width: 100%;
+			gap: 1rem;
+			svg {
+				path {
+					fill: @blue-900;
+				}
 			}
 		}
 	}
@@ -345,6 +410,7 @@ main {
 
 // CART STYLES
 .cart {
+	display: none;
 	position: absolute;
 	width: 22.5rem;
 	height: 16rem;
@@ -393,6 +459,36 @@ main {
 			&-delete {
 				margin-top: -0.75rem;
 				margin-left: -5rem;
+			}
+		}
+	}
+}
+// PRODUCT IMAGES STYLES
+.prod-images {
+	display: none;
+	gap: 2rem;
+	margin-right: 6rem;
+	@media (min-width: 60rem) {
+		.flex(flex-start, center, column);
+		float: left;
+	}
+	&__active {
+		width: 27.813rem;
+		height: 27.813rem;
+		img {
+			border-radius: 0.938rem;
+		}
+	}
+	&__thumnails {
+		.flex(center, center, row);
+		gap: 2rem;
+		list-style: none;
+		padding: 0;
+		&-img {
+			width: 5.5rem;
+			height: 5.5rem;
+			img {
+				border-radius: 0.625rem;
 			}
 		}
 	}
