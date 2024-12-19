@@ -1,4 +1,6 @@
 const openMenuBtn = document.querySelector(".nav__left-navIcon");
+const btnSliderPrev = document.getElementById("prev-btn");
+const btnSliderNext = document.getElementById("next-btn");
 
 function openNav() {
 	const menu = document.querySelector(".menu__list");
@@ -26,4 +28,19 @@ function closeNav() {
 	document.body.style.overflowY = "scroll";
 }
 
+function sliderHandler(e, direction) {
+	const productImages = document.querySelectorAll(".list-item");
+	const currentActiveIndex = Array.from(productImages).findIndex((item) =>
+		item.classList.contains("current")
+	);
+	let newActiveIndex =
+		direction === "next" ? currentActiveIndex + 1 : currentActiveIndex - 1;
+	if (newActiveIndex >= productImages.length) newActiveIndex = 0;
+	else if (newActiveIndex < 0) newActiveIndex = productImages.length - 1;
+	productImages[newActiveIndex].classList.add("current");
+	productImages[currentActiveIndex].classList.remove("current");
+}
+
 openMenuBtn.addEventListener("click", openNav);
+btnSliderNext.addEventListener("click", (e) => sliderHandler(e, "next"));
+btnSliderPrev.addEventListener("click", (e) => sliderHandler(e, "prev"));
