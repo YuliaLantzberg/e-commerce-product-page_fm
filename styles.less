@@ -1,0 +1,274 @@
+// CSS RESET
+
+/* 1. Use a more-intuitive box-sizing model */
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+/* 2. Remove default margin */
+* {
+	margin: 0;
+}
+
+body {
+	/* 3. Add accessible line-height */
+	line-height: 1.5;
+	/* 4. Improve text rendering */
+	-webkit-font-smoothing: antialiased;
+}
+
+/* 5. Improve media defaults */
+img,
+picture,
+video,
+canvas,
+svg {
+	display: block;
+	max-width: 100%;
+}
+
+/* 6. Inherit fonts for form controls */
+input,
+button,
+textarea,
+select {
+	font: inherit;
+}
+
+/* 7. Avoid text overflows */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	overflow-wrap: break-word;
+}
+
+/* 8. Improve line wrapping */
+p {
+	text-wrap: pretty;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	text-wrap: balance;
+}
+
+/*
+    9. Create a root stacking context
+  */
+#root,
+#__next {
+	isolation: isolate;
+}
+
+// VARIABLES
+// ## Colors
+
+// ### Primary
+
+@orange-500: hsl(26, 100%, 55%);
+@orange-100: hsl(25, 100%, 94%);
+
+// ### Neutral
+
+@blue-900: hsl(220, 13%, 13%);
+@grayish-blue-500: hsl(219, 9%, 45%);
+@grayish-blue-300: hsl(220, 14%, 75%);
+@grayish-blue-100: hsl(223, 64%, 98%);
+@white: hsl(0, 0%, 100%);
+@black: hsl(0, 0%, 0%); //(with 75% opacity for lightbox background)
+
+// ## Typography
+
+@fs-regular: 1rem;
+
+@fw-regular: 400;
+@fw-bold: 700;
+
+// MIXINS
+.flex(@align, @justify, @direction) {
+	display: flex;
+	align-items: @align;
+	justify-content: @justify;
+	flex-direction: @direction;
+}
+
+// GENERAL STYLES
+body {
+	font-family: "Kumbh Sans", serif;
+}
+
+.btn {
+	background-color: @orange-500;
+	border: none;
+	border-radius: 0.625rem;
+	text-align: center;
+	padding: 1.125rem;
+}
+
+// NAV STYLES
+
+.nav {
+	.flex(center, space-between, row);
+	margin: 1.188rem 1.5rem;
+	.menu {
+		display: none;
+	}
+	&__left {
+		.flex(center, center, row);
+		gap: 1rem;
+	}
+	&__right {
+		.flex(center, center, row);
+		gap: 1.375rem;
+		&__avatar {
+			width: 1.5rem;
+			height: 1.5rem;
+		}
+	}
+}
+
+// CAROUSEL STYLES
+.carousel {
+	max-width: 100%;
+	&-view {
+		position: relative;
+		&__btn {
+			position: absolute;
+			width: 2.5rem;
+			height: 2.5rem;
+			background-color: @white;
+			border: none;
+			border-radius: 50%;
+			top: 50%;
+			transform: translateY(-50%);
+			&__arrow {
+				position: absolute;
+				left: 50%;
+				width: 0.7rem;
+				height: 0.7rem;
+				border-left: 4px solid;
+				border-top: 4px solid;
+			}
+
+			&--prev {
+				left: 1rem;
+				.carousel-view__btn__arrow {
+					transform: rotate(320deg) translateY(-60%);
+				}
+			}
+
+			&--next {
+				right: 1rem;
+				.carousel-view__btn__arrow {
+					transform: rotate(135deg) translateY(80%);
+				}
+			}
+		}
+		.product-img-list {
+			list-style: none;
+			padding: 0;
+			.flex(center, center, row);
+			.list-item {
+				scroll-snap-align: center;
+
+				.product-img {
+					width: 23.438rem;
+					max-width: 27.813rem;
+				}
+			}
+		}
+	}
+}
+
+// MAIN STYLES
+.main-content {
+	display: grid;
+	padding: 1.5rem;
+	gap: 1rem;
+	.company-name {
+		text-transform: uppercase;
+		font-weight: @fw-bold;
+		font-size: 0.75rem;
+		letter-spacing: 1.85px;
+		color: @grayish-blue-500;
+	}
+	.product-name {
+		color: @blue-900;
+		font-weight: @fw-bold;
+		font-size: 1.75rem;
+		line-height: 1.14;
+	}
+	.description {
+		color: @grayish-blue-500;
+		font-size: 0.938rem;
+		line-height: 1.67;
+	}
+	.price {
+		.flex(center, space-between, row);
+		&__current {
+			.flex(center, center, row);
+			gap: 1rem;
+			&__after-discount {
+				color: @blue-900;
+				font-size: 1.75rem;
+				font-weight: @fw-bold;
+			}
+			&__discount {
+				background-color: @blue-900;
+				color: @grayish-blue-100;
+				font-weight: @fw-bold;
+				padding: 0.188rem 0.563rem;
+				border-radius: 0.375rem;
+			}
+		}
+
+		&__before-discount {
+			text-decoration: line-through;
+		}
+	}
+
+	.quantity {
+		position: relative;
+		&__btn {
+			position: absolute;
+			border: none;
+			background-color: transparent;
+			top: 0.65rem;
+			font-size: 1.5rem;
+			font-weight: bold;
+			color: @orange-500;
+			&--plus {
+				right: 1rem;
+			}
+			&--minus {
+				left: 1rem;
+			}
+		}
+		&__num {
+			width: 100%;
+			text-align: center;
+			padding: 1.25rem 1.5rem;
+			border: none;
+			background-color: @grayish-blue-100;
+		}
+	}
+
+	.btn {
+		.flex(center, center, row);
+		gap: 1rem;
+		svg {
+			path {
+				fill: @blue-900;
+			}
+		}
+	}
+}
