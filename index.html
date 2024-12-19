@@ -20,10 +20,12 @@
 		/>
 		<link rel="stylesheet/less" type="text/css" href="styles.less" />
 		<script src="https://cdn.jsdelivr.net/npm/less"></script>
+		<script src="script.js" defer></script>
 
 		<title>Frontend Mentor | E-commerce product page</title>
 	</head>
 	<body>
+		<div class="overlay"></div>
 		<main>
 			<nav class="nav">
 				<div class="nav__left">
@@ -42,13 +44,15 @@
 							fill-rule="nonzero"
 						/>
 					</svg>
-					<ul class="menu">
-						<li>Collections</li>
-						<li>Men</li>
-						<li>Women</li>
-						<li>About</li>
-						<li>Contact</li>
-					</ul>
+					<div class="menu__list">
+						<ul class="menu">
+							<li><a href="#">Collections</a></li>
+							<li><a href="#">Men</a></li>
+							<li><a href="#">Women</a></li>
+							<li><a href="#">About</a></li>
+							<li><a href="#">Contact</a></li>
+						</ul>
+					</div>
 				</div>
 				<div class="nav__right">
 					<svg
@@ -84,28 +88,28 @@
 					<!-- List Container -->
 					<ul id="product-img-list" class="product-img-list">
 						<!-- Items -->
-						<li class="list-item">
+						<li class="list-item current">
 							<img
 								id="product-img"
 								class="product-img"
 								src="images/image-product-1.jpg"
 							/>
 						</li>
-						<li>
+						<li class="list-item">
 							<img
 								id="product-img"
 								class="product-img"
 								src="images/image-product-2.jpg"
 							/>
 						</li>
-						<li>
+						<li class="list-item">
 							<img
 								id="product-img"
 								class="product-img"
 								src="images/image-product-3.jpg"
 							/>
 						</li>
-						<li>
+						<li class="list-item">
 							<img
 								id="product-img"
 								class="product-img"

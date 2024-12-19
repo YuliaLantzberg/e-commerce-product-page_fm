@@ -104,6 +104,7 @@ h6 {
 // GENERAL STYLES
 body {
 	font-family: "Kumbh Sans", serif;
+	width: 100vw;
 }
 
 .btn {
@@ -114,17 +115,60 @@ body {
 	padding: 1.125rem;
 }
 
+// OVERLAY STYLES
+
+.overlay {
+	display: none;
+	position: fixed;
+	background-color: rgba(0, 0, 0, 0.685);
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	z-index: 1;
+}
+
 // NAV STYLES
 
 .nav {
 	.flex(center, space-between, row);
 	margin: 1.188rem 1.5rem;
-	.menu {
-		display: none;
-	}
 	&__left {
 		.flex(center, center, row);
 		gap: 1rem;
+
+		.menu__list {
+			.flex(flex-start, flex-start, column);
+			gap: 3.25rem;
+			height: 100%;
+			position: fixed;
+			z-index: 10;
+			top: 0;
+			left: 0;
+			background-color: @white;
+			overflow-x: hidden;
+			transition: 0.5s;
+			padding: 2rem 1rem;
+			display: none;
+			.menu {
+				.flex(flex-start, flex-start, column);
+				gap: 1.25rem;
+				list-style: none;
+				font-weight: @fw-bold;
+				font-size: 1.125rem;
+				padding: 0 1rem;
+				a {
+					text-decoration: none;
+					color: @blue-900;
+					cursor: pointer;
+				}
+			}
+			&__close {
+				border: none;
+				background-color: transparent;
+				margin-left: 0.5rem;
+			}
+		}
 	}
 	&__right {
 		.flex(center, center, row);
@@ -138,7 +182,6 @@ body {
 
 // CAROUSEL STYLES
 .carousel {
-	max-width: 100%;
 	&-view {
 		position: relative;
 		&__btn {
@@ -178,11 +221,17 @@ body {
 			padding: 0;
 			.flex(center, center, row);
 			.list-item {
-				scroll-snap-align: center;
-
+				display: none;
 				.product-img {
-					width: 23.438rem;
-					max-width: 27.813rem;
+					display: none;
+				}
+				&.current {
+					display: block;
+					.product-img {
+						display: block;
+						width: 23.438rem;
+						max-width: 27.813rem;
+					}
 				}
 			}
 		}
