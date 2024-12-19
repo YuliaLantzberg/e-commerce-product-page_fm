@@ -2,6 +2,12 @@ const openMenuBtn = document.querySelector(".nav__left-navIcon");
 const btnSliderPrev = document.getElementById("prev-btn");
 const btnSliderNext = document.getElementById("next-btn");
 
+const btnMinus = document.querySelector(".quantity__btn--minus");
+
+const btnPlus = document.querySelector(".quantity__btn--plus");
+
+const input = document.getElementById("quantity__num");
+
 function openNav() {
 	const menu = document.querySelector(".menu__list");
 	const closeBtn = document.createElement("button");
@@ -41,6 +47,18 @@ function sliderHandler(e, direction) {
 	productImages[currentActiveIndex].classList.remove("current");
 }
 
+function quantityHandler(e, action) {
+	console.log("Quantity Handler");
+	e.preventDefault();
+	let num = action === "plus" ? +input.value + 1 : +input.value - 1;
+	if (num < 0) num = 0;
+	input.value = num;
+}
+
 openMenuBtn.addEventListener("click", openNav);
 btnSliderNext.addEventListener("click", (e) => sliderHandler(e, "next"));
 btnSliderPrev.addEventListener("click", (e) => sliderHandler(e, "prev"));
+
+btnMinus.addEventListener("click", (e) => quantityHandler(e, "minus"));
+
+btnPlus.addEventListener("click", (e) => quantityHandler(e, "plus"));
