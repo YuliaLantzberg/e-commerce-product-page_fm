@@ -105,6 +105,11 @@ h6 {
 body {
 	font-family: "Kumbh Sans", serif;
 	width: 100vw;
+	overflow-x: hidden;
+}
+
+main {
+	position: relative;
 }
 
 .btn {
@@ -113,6 +118,7 @@ body {
 	border-radius: 0.625rem;
 	text-align: center;
 	padding: 1.125rem;
+	font-weight: @fw-bold;
 }
 
 // OVERLAY STYLES
@@ -170,11 +176,25 @@ body {
 		}
 	}
 	&__right {
+		position: relative;
 		.flex(center, center, row);
 		gap: 1.375rem;
 		&__avatar {
 			width: 1.5rem;
 			height: 1.5rem;
+		}
+		.quantity-in-cart {
+			position: absolute;
+			width: 1.188rem;
+			height: 1.188rem;
+			font-size: 0.625rem;
+			font-weight: @fw-bold;
+			color: @white;
+			background-color: @orange-500;
+			border-radius: 50%;
+			.flex(center, center, row);
+			top: -0.3rem;
+			left: 0.7rem;
 		}
 	}
 }
@@ -230,6 +250,7 @@ body {
 						display: block;
 						width: 23.438rem;
 						max-width: 27.813rem;
+						height: 18.75rem;
 					}
 				}
 			}
@@ -314,10 +335,64 @@ body {
 	.btn {
 		.flex(center, center, row);
 		gap: 1rem;
-		font-weight: @fw-bold;
 		svg {
 			path {
 				fill: @blue-900;
+			}
+		}
+	}
+}
+
+// CART STYLES
+.cart {
+	position: absolute;
+	width: 22.5rem;
+	height: 16rem;
+	border-radius: 0.625rem;
+	background-color: @white;
+	top: 3.5rem;
+	left: 0.438rem;
+	z-index: 10;
+	padding: 1rem;
+	&__header {
+		font-weight: @fw-bold;
+		color: @blue-900;
+		margin-bottom: 1.688rem;
+	}
+	&__empty {
+		.flex(center, center, column);
+		text-align: center;
+		height: 12rem;
+		display: none;
+	}
+	&__full {
+		display: grid;
+		place-content: center;
+		height: 12rem;
+		&__prod {
+			.flex(center, center, row);
+			gap: 1rem;
+			margin-bottom: 1rem;
+			&-img {
+				width: 3.125rem;
+				height: 3.125rem;
+				overflow: hidden;
+				img {
+					border-radius: 0.25rem;
+				}
+			}
+			&-text {
+				line-height: 1.62;
+				color: @grayish-blue-500;
+				margin-top: -0.75rem;
+			}
+			&-total {
+				font-weight: @fw-bold;
+				color: @blue-900;
+			}
+			&-delete {
+				margin-top: -0.75rem;
+				margin-left: -5rem;
 			}
 		}
 	}
