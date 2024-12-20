@@ -20,6 +20,7 @@ const thumbnails = document.querySelectorAll(".prod-images__thumnails-img");
 let data = null;
 let itemsQuantity = 0;
 let currentImage = null;
+let priceAfterDiscount = 0;
 
 async function fetchData() {
 	try {
@@ -71,6 +72,21 @@ function loadSliderImgs() {
 		.join("");
 	const firstImg = slider.querySelector(".list-item");
 	firstImg.classList.add("current");
+}
+
+function loadProductPage() {
+	const container = document.querySelector(".main-content");
+	const prodName = container.querySelector(".product-name");
+	const description = container.querySelector(".description");
+	const itemPrice = container.querySelector(".price__current__after-discount");
+	const discount = container.querySelector(".price__current__discount");
+	const price = container.querySelector(".price__before-discount");
+
+	prodName.textContent = data.title;
+	description.textContent = data.description;
+	discount.textContent = `${data.discount}%`;
+	itemPrice.textContent = `$${priceAfterDiscount}`;
+	price.textContent = `$${data.price}`;
 }
 
 function sliderHandler(e, direction) {
@@ -125,17 +141,15 @@ function updateCart() {
 	const cartQuantity = cart.querySelector(".cart__full__prod-quantity");
 	const cartTotalPrice = cart.querySelector(".cart__full__prod-total");
 	const cartProdImg = cart.querySelector(".cart__full__prod-img");
-	const prodName = document.querySelector(".product-name");
-	const itemPrice = document.querySelector(".price__current__after-discount");
 	const imgNum = getImgNum(currentImage, false);
 	const src = `images/image-product-${imgNum}-thumbnail.jpg`;
 	cartProdImg.innerHTML = `<img src=${src} />`;
 
-	cartProdName.textContent = prodName.textContent;
-	cartItemPrice.textContent = `${itemPrice.textContent}`;
+	cartProdName.textContent = data.title;
+	cartItemPrice.textContent = `$${priceAfterDiscount}`;
 	cartQuantity.textContent = itemsQuantity;
 	cartTotalPrice.textContent = `$${(
-		itemsQuantity * Number(itemPrice.textContent.replace("$", ""))
+		itemsQuantity * Number(priceAfterDiscount)
 	).toFixed(2)}`;
 }
 
@@ -175,7 +189,9 @@ function getImgNum(img, isThumbnail) {
 window.onload = async function () {
 	data = await fetchData();
 	console.log(data);
+	priceAfterDiscount = data.price * (data.discount / 100);
 	loadSliderImgs();
+	loadProductPage();
 	updateQuantityInCart();
 	updateCart();
 };
