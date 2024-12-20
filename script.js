@@ -91,11 +91,20 @@ function updateCart() {
 	const cartItemPrice = cart.querySelector(".cart__full__prod-price");
 	const cartQuantity = cart.querySelector(".cart__full__prod-quantity");
 	const cartTotalPrice = cart.querySelector(".cart__full__prod-total");
+	const cartProdImg = cart.querySelector(".cart__full__prod-img");
 
 	const prodName = document.querySelector(".product-name");
 	const itemPrice = document.querySelector(".price__current__after-discount");
+	const currentImg = document.querySelector(".current img");
+	const imgNum = currentImg.src
+		.charAt(currentImg.src.lastIndexOf(".") - 1)
+		.replace(/[^0-9]/g, "");
 
-	console.log(itemPrice);
+	const img = document.createElement("img");
+	img.src = `images/image-product-${imgNum}-thumbnail.jpg`;
+
+	cartProdImg.appendChild(img);
+
 	cartProdName.textContent = prodName.textContent;
 	cartItemPrice.textContent = `${itemPrice.textContent}`;
 	cartQuantity.textContent = itemsQuantity;
