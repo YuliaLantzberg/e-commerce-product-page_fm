@@ -76,6 +76,7 @@ h6 {
 
 @orange-500: hsl(26, 100%, 55%);
 @orange-100: hsl(25, 100%, 94%);
+@orange-300: #ffab6a;
 
 // ### Neutral
 
@@ -126,6 +127,21 @@ main {
 	padding: 1.125rem;
 	font-weight: @fw-bold;
 	cursor: pointer;
+	&:hover {
+		background-color: @orange-300;
+	}
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+	appearance: textfield;
+	-moz-appearance: textfield;
 }
 
 // OVERLAY STYLES
@@ -160,6 +176,9 @@ main {
 				display: none;
 			}
 		}
+		.logo {
+			cursor: pointer;
+		}
 		.menu__list {
 			.flex(flex-start, flex-start, column);
 			gap: 3.25rem;
@@ -191,6 +210,14 @@ main {
 					text-decoration: none;
 					color: @blue-900;
 					cursor: pointer;
+
+					&:hover {
+						text-decoration: underline;
+						text-decoration-color: @orange-500;
+						text-underline-offset: 2.2rem;
+						text-decoration-thickness: 5px;
+						z-index: 10;
+					}
 				}
 			}
 			&__close {
@@ -204,9 +231,17 @@ main {
 		position: relative;
 		.flex(center, center, row);
 		gap: 1.375rem;
+		.icon-cart {
+			cursor: pointer;
+		}
 		&__avatar {
 			width: 1.5rem;
 			height: 1.5rem;
+			cursor: pointer;
+			&:hover {
+				border: 2px solid @orange-500;
+				border-radius: 50%;
+			}
 		}
 		.quantity-in-cart {
 			position: absolute;
@@ -490,8 +525,17 @@ main {
 		&-img {
 			width: 5.5rem;
 			height: 5.5rem;
+			cursor: pointer;
 			img {
 				border-radius: 0.625rem;
+			}
+			&.active {
+				border: 3px solid @orange-500;
+				border-radius: 0.8rem;
+			}
+			&.active > img,
+			&:hover > img {
+				opacity: 0.5;
 			}
 		}
 	}
