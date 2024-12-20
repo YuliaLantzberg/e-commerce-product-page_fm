@@ -225,6 +225,7 @@ function deleteItemFromCart() {
 
 function createCloseBtn() {
 	const closeBtn = document.createElement("button");
+	closeBtn.classList.add("close-btn");
 	closeBtn.textContent = "X";
 	return closeBtn;
 }

@@ -100,14 +100,29 @@ h6 {
 	justify-content: @justify;
 	flex-direction: @direction;
 }
+.grid-center {
+	display: grid;
+	place-content: center;
+}
+.dimensions(@width, @height) {
+	width: @width;
+	height: @height;
+}
+.positionLeft(@top, @left) {
+	top: @top;
+	left: @left;
+}
+.font(@size, @weight) {
+	font-size: @size;
+	font-weight: @weight;
+}
 
 // GENERAL STYLES
 body {
 	font-family: "Kumbh Sans", serif;
 	width: 100vw;
 	overflow-x: hidden;
-	display: grid;
-	place-content: center;
+	.grid-center();
 	@media (min-width: 60rem) {
 		height: 100vh;
 	}
@@ -131,6 +146,10 @@ main {
 		background-color: @orange-300;
 	}
 }
+.close-btn {
+	border: none;
+	background-color: transparent;
+}
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -150,10 +169,8 @@ input[type="number"] {
 	display: none;
 	position: fixed;
 	background-color: rgba(0, 0, 0, 0.685);
-	width: 100%;
-	height: 100%;
-	top: 0;
-	left: 0;
+	.dimensions(100%, 100%);
+	.positionLeft(0, 0);
 	z-index: 1;
 }
 
@@ -185,8 +202,7 @@ input[type="number"] {
 			height: 100%;
 			position: fixed;
 			z-index: 10;
-			top: 0;
-			left: 0;
+			.positionLeft(0, 0);
 			background-color: @white;
 			overflow-x: hidden;
 			padding: 2rem 1rem;
@@ -200,8 +216,7 @@ input[type="number"] {
 				.flex(flex-start, flex-start, column);
 				gap: 1.25rem;
 				list-style: none;
-				font-weight: @fw-bold;
-				font-size: 1.125rem;
+				.font(1.125rem, @fw-bold);
 				padding: 0 1rem;
 				@media (min-width: 60rem) {
 					.flex(flex-start, center, row);
@@ -221,8 +236,6 @@ input[type="number"] {
 				}
 			}
 			&__close {
-				border: none;
-				background-color: transparent;
 				margin-left: 0.5rem;
 			}
 		}
@@ -235,12 +248,10 @@ input[type="number"] {
 			cursor: pointer;
 		}
 		&__avatar {
-			width: 1.5rem;
-			height: 1.5rem;
+			.dimensions(1.5rem, 1.5rem);
 			cursor: pointer;
 			@media (min-width: 60rem) {
-				width: 3.125rem;
-				height: 3.125rem;
+				.dimensions(3.125rem, 3.125rem);
 			}
 			&:hover {
 				border: 2px solid @orange-500;
@@ -249,16 +260,13 @@ input[type="number"] {
 		}
 		.quantity-in-cart {
 			position: absolute;
-			width: 1.188rem;
-			height: 1.188rem;
-			font-size: 0.625rem;
-			font-weight: @fw-bold;
+			.dimensions(1.188rem, 1.188rem);
+			.font(0.625rem, @fw-bold);
 			color: @white;
 			background-color: @orange-500;
 			border-radius: 50%;
 			.flex(center, center, row);
-			top: -0.3rem;
-			left: 0.7rem;
+			.positionLeft(-0.3rem, 0.7rem);
 			display: none;
 		}
 	}
@@ -285,8 +293,7 @@ input[type="number"] {
 		display: block;
 		.slider__container {
 			position: absolute;
-			top: 14.7%;
-			left: 10%;
+			.positionLeft(14.7%, 10%);
 			max-width: 34.375rem;
 			max-height: 34.375rem;
 			img {
@@ -294,8 +301,7 @@ input[type="number"] {
 			}
 		}
 		.slider__btn {
-			width: 3.5rem;
-			height: 3.5rem;
+			.dimensions(3.5rem, 3.5rem);
 			&--prev {
 				left: 2rem;
 				z-index: 100;
@@ -318,8 +324,7 @@ input[type="number"] {
 	}
 	&__btn {
 		position: absolute;
-		width: 2.5rem;
-		height: 2.5rem;
+		.dimensions(2.5rem, 2.5rem);
 		background-color: @white;
 		border: none;
 		border-radius: 50%;
@@ -329,8 +334,7 @@ input[type="number"] {
 		&__arrow {
 			position: absolute;
 			left: 50%;
-			width: 0.7rem;
-			height: 0.7rem;
+			.dimensions(0.7rem, 0.7rem);
 			border-left: 4px solid;
 			border-top: 4px solid;
 		}
@@ -362,8 +366,7 @@ input[type="number"] {
 	}
 	.company-name {
 		text-transform: uppercase;
-		font-weight: @fw-bold;
-		font-size: clamp(0.75rem, 1.44vw, 0.813rem);
+		.font(clamp(0.75rem, 1.44vw, 0.813rem), @fw-bold);
 		letter-spacing: 1.85px;
 		color: @grayish-blue-500;
 		@media (min-width: 60rem) {
@@ -372,8 +375,7 @@ input[type="number"] {
 	}
 	.product-name {
 		color: @blue-900;
-		font-weight: @fw-bold;
-		font-size: clamp(1.75rem, 4.88vw, 2.75rem);
+		.font(clamp(1.75rem, 4.88vw, 2.75rem), @fw-bold);
 		line-height: 1.14;
 		@media (min-width: 60rem) {
 			margin-bottom: 2rem;
@@ -398,8 +400,7 @@ input[type="number"] {
 			gap: 1rem;
 			&__after-discount {
 				color: @blue-900;
-				font-size: 1.75rem;
-				font-weight: @fw-bold;
+				.font(1.75rem, @fw-bold);
 			}
 			&__discount {
 				background-color: @blue-900;
@@ -429,8 +430,7 @@ input[type="number"] {
 				border: none;
 				background-color: transparent;
 				top: 0.65rem;
-				font-size: 1.5rem;
-				font-weight: bold;
+				.font(1.5rem, @fw-bold);
 				color: @orange-500;
 				cursor: pointer;
 				&--plus {
@@ -467,12 +467,10 @@ input[type="number"] {
 .cart {
 	display: none;
 	position: absolute;
-	width: 22.5rem;
-	height: 16rem;
+	.dimensions(22.5rem, 16rem);
 	border-radius: 0.625rem;
 	background-color: @white;
-	top: 3.5rem;
-	left: 0.438rem;
+	.positionLeft(3.5rem, 0.438rem);
 	z-index: 10;
 	padding: 1rem;
 	@media (min-width: 60rem) {
@@ -492,16 +490,14 @@ input[type="number"] {
 		display: none;
 	}
 	&__full {
-		display: grid;
-		place-content: center;
+		.grid-center();
 		height: 12rem;
 		&__prod {
 			.flex(center, center, row);
 			gap: 1rem;
 			margin-bottom: 1rem;
 			&-img {
-				width: 3.125rem;
-				height: 3.125rem;
+				.dimensions(3.125rem, 3.125rem);
 				overflow: hidden;
 				img {
 					border-radius: 0.25rem;
@@ -517,8 +513,6 @@ input[type="number"] {
 				color: @blue-900;
 			}
 			&-delete {
-				border: none;
-				background-color: transparent;
 				margin-top: -0.75rem;
 				margin-left: -5rem;
 				cursor: pointer;
@@ -536,8 +530,7 @@ input[type="number"] {
 		float: left;
 	}
 	&__active {
-		width: 27.813rem;
-		height: 27.813rem;
+		.dimensions(27.813rem, 27.813rem);
 		img {
 			border-radius: 0.938rem;
 		}
@@ -548,8 +541,7 @@ input[type="number"] {
 		list-style: none;
 		padding: 0;
 		&-img {
-			width: 5.5rem;
-			height: 5.5rem;
+			.dimensions(5.5rem, 5.5rem);
 			cursor: pointer;
 			img {
 				border-radius: 0.625rem;
@@ -568,19 +560,14 @@ input[type="number"] {
 // Lightbox Styles
 .lightbox {
 	position: absolute;
-	top: -15%;
-	left: 20%;
-	width: 37.875rem;
-	height: 45.125rem;
+	.positionLeft(-15%, 20%);
+	.dimensions(37.875rem, 45.125rem);
 	z-index: 100;
 	&.prod-images__thumnails {
 		z-index: 1000;
-		left: 23%;
-		top: 45%;
+		.positionLeft(45%, 23%);
 	}
 	&__close {
-		border: none;
-		background-color: transparent;
 		position: absolute;
 		right: 25%;
 		top: -5%;
