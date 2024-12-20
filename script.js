@@ -12,7 +12,10 @@ const quantityInCart = document.querySelector(".quantity-in-cart");
 
 const btnAddToCart = document.getElementById("btn-add");
 
+const thumbnails = document.querySelectorAll(".prod-images__thumnails-img");
+
 let itemsQuantity = 0;
+let currentImage = null;
 
 function openNav() {
 	const menu = document.querySelector(".menu__list");
@@ -32,7 +35,7 @@ function openNav() {
 function closeNav() {
 	const menu = document.querySelector(".menu__list");
 	const closeBtn = document.querySelector(".menu__list__close");
-	console.log(closeBtn);
+
 	closeBtn.remove();
 	document.querySelector(".overlay").style.display = "none";
 	menu.style.display = "none";
@@ -95,15 +98,9 @@ function updateCart() {
 
 	const prodName = document.querySelector(".product-name");
 	const itemPrice = document.querySelector(".price__current__after-discount");
-	const currentImg = document.querySelector(".current img");
-	const imgNum = currentImg.src
-		.charAt(currentImg.src.lastIndexOf(".") - 1)
-		.replace(/[^0-9]/g, "");
-
-	const img = document.createElement("img");
-	img.src = `images/image-product-${imgNum}-thumbnail.jpg`;
-
-	cartProdImg.appendChild(img);
+	const imgNum = getImgNum(currentImage, false);
+	const src = `images/image-product-${imgNum}-thumbnail.jpg`;
+	cartProdImg.innerHTML = `<img src=${src} />`;
 
 	cartProdName.textContent = prodName.textContent;
 	cartItemPrice.textContent = `${itemPrice.textContent}`;
@@ -119,6 +116,26 @@ function addToCartHandler() {
 	updateCart();
 }
 
+function handleProductImages(e) {
+	const mainImg = document.querySelector(".prod-images__active img");
+	thumbnails.forEach((img) => img.classList.remove("active"));
+	e.currentTarget.classList.add("active");
+	const chosenImgNum = getImgNum(e.target, true);
+	mainImg.src = `images/image-product-${chosenImgNum}.jpg`;
+	currentImage = mainImg;
+	updateCart();
+}
+
+function getImgNum(img, isThumbnail) {
+	if (img) {
+		const index = isThumbnail
+			? img.src.indexOf("-thumbnail") - 1
+			: img.src.lastIndexOf(".") - 1;
+		return img.src.charAt(index);
+	}
+	return 1;
+}
+
 openMenuBtn.addEventListener("click", openNav);
 btnSliderNext.addEventListener("click", (e) => sliderHandler(e, "next"));
 btnSliderPrev.addEventListener("click", (e) => sliderHandler(e, "prev"));
@@ -131,6 +148,10 @@ cartIcon.addEventListener("click", openCart);
 cart.addEventListener("mouseleave", closeCart);
 
 btnAddToCart.addEventListener("click", addToCartHandler);
+
+thumbnails.forEach((img) => {
+	img.addEventListener("click", handleProductImages);
+});
 
 window.onload = function () {
 	updateQuantityInCart();
