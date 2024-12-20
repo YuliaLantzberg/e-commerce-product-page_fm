@@ -74,6 +74,27 @@ function loadSliderImgs() {
 	firstImg.classList.add("current");
 }
 
+function loadProdImgs() {
+	const imgsContainer = document.querySelector(".prod-images");
+	const activeImgEl = imgsContainer.querySelector(".prod-images__active");
+	const imgsList = imgsContainer.querySelector(".prod-images__thumnails");
+
+	const activeImg = document.createElement("img");
+	activeImg.src = data.images[0];
+	activeImg.alt = "";
+	activeImgEl.appendChild(activeImg);
+
+	imgsList.innerHTML = data.images_thumbnail
+		.map(
+			(img) => `<li class="prod-images__thumnails-img">
+						<img src=${img} alt="" />
+					</li>`
+		)
+		.join("");
+	const firstImg = imgsList.querySelector(".prod-images__thumnails-img");
+	firstImg.classList.add("active");
+}
+
 function loadProductPage() {
 	const container = document.querySelector(".main-content");
 	const prodName = container.querySelector(".product-name");
@@ -191,6 +212,7 @@ window.onload = async function () {
 	console.log(data);
 	priceAfterDiscount = data.price * (data.discount / 100);
 	loadSliderImgs();
+	loadProdImgs();
 	loadProductPage();
 	updateQuantityInCart();
 	updateCart();
