@@ -3,10 +3,11 @@ const btnSliderPrev = document.getElementById("prev-btn");
 const btnSliderNext = document.getElementById("next-btn");
 
 const btnMinus = document.querySelector(".quantity__btn--minus");
-
 const btnPlus = document.querySelector(".quantity__btn--plus");
-
 const input = document.getElementById("quantity__num");
+
+const cartIcon = document.querySelector(".icon-cart");
+const cart = document.querySelector(".cart");
 
 function openNav() {
 	const menu = document.querySelector(".menu__list");
@@ -55,10 +56,22 @@ function quantityHandler(e, action) {
 	input.value = num;
 }
 
+function openCart() {
+	console.log("Open Cart");
+	cart.style.display = "block";
+}
+
+function closeCart() {
+	cart.style.display = "none";
+}
+
 openMenuBtn.addEventListener("click", openNav);
 btnSliderNext.addEventListener("click", (e) => sliderHandler(e, "next"));
 btnSliderPrev.addEventListener("click", (e) => sliderHandler(e, "prev"));
 
 btnMinus.addEventListener("click", (e) => quantityHandler(e, "minus"));
-
 btnPlus.addEventListener("click", (e) => quantityHandler(e, "plus"));
+
+cartIcon.addEventListener("mouseover", openCart);
+cartIcon.addEventListener("click", openCart);
+cart.addEventListener("mouseleave", closeCart);
