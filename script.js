@@ -18,8 +18,9 @@ const btnDeleteItem = document.getElementById("btn-delete");
 let thumbnails = [];
 let data = null;
 let itemsQuantity = 0;
-let currentImage = null;
+let currentImageIndex = 0;
 let priceAfterDiscount = 0;
+let isLightboxOn = false;
 
 async function fetchData() {
 	try {
@@ -32,10 +33,7 @@ async function fetchData() {
 }
 function openNav() {
 	const menu = document.querySelector(".menu__list");
-	const closeBtn = document.createElement("button");
-	const closeBtnIcon = document.createElement("img");
-	closeBtnIcon.src = "images/icon-close.svg";
-	closeBtn.appendChild(closeBtnIcon);
+	const closeBtn = createCloseBtn();
 	closeBtn.classList.add("menu__list__close");
 	menu.insertBefore(closeBtn, menu.childNodes[0]);
 	document.querySelector(".overlay").style.display = "block";
@@ -57,20 +55,13 @@ function closeNav() {
 }
 
 function loadSliderImgs() {
-	const slider = document.getElementById("product-img-list");
-	slider.innerHTML = data.images
-		.map(
-			(img) => `<li class="list-item">
-							<img
-								id="product-img"
-								class="product-img"
-								src=${img}
-							/>
-						</li>`
-		)
-		.join("");
-	const firstImg = slider.querySelector(".list-item");
-	firstImg.classList.add("current");
+	const imgContainer = document.getElementById("slider__container");
+	imgContainer.innerHTML = `<img
+    id="slider__img"
+    class="slider__img"
+    src=${data.images[0]}
+/>`;
+	currentImageIndex = 0;
 }
 
 function loadProdImgs() {
@@ -94,6 +85,7 @@ function loadProdImgs() {
 		.join("");
 	const firstImg = imgsList.querySelector(`.${thumbnailsClass}`);
 	firstImg.classList.add("active");
+	activeImgEl.addEventListener("click", lightboxOn);
 	thumbnails = imgsList.querySelectorAll(`.${thumbnailsClass}`);
 	thumbnails.forEach((img) => {
 		img.addEventListener("click", handleProductImages);
@@ -116,16 +108,39 @@ function loadProductPage() {
 }
 
 function sliderHandler(e, direction) {
-	const productImages = document.querySelectorAll(".list-item");
-	const currentActiveIndex = Array.from(productImages).findIndex((item) =>
-		item.classList.contains("current")
-	);
+	const img = document.querySelector(".slider__container img");
 	let newActiveIndex =
-		direction === "next" ? currentActiveIndex + 1 : currentActiveIndex - 1;
-	if (newActiveIndex >= productImages.length) newActiveIndex = 0;
-	else if (newActiveIndex < 0) newActiveIndex = productImages.length - 1;
-	productImages[newActiveIndex].classList.add("current");
-	productImages[currentActiveIndex].classList.remove("current");
+		direction === "next" ? currentImageIndex + 1 : currentImageIndex - 1;
+	if (newActiveIndex >= data.images.length) newActiveIndex = 0;
+	else if (newActiveIndex < 0) newActiveIndex = data.images.length - 1;
+	if (img) {
+		img.src = data.images[newActiveIndex];
+	}
+	currentImageIndex = newActiveIndex;
+}
+
+function lightboxOn() {
+	isLightboxOn = true;
+	const main = document.querySelector("main");
+	const slider = document.querySelector(".slider");
+	const thumbnailImgs = document.querySelector(".prod-images__thumnails");
+	const closeBtn = createCloseBtn();
+	closeBtn.classList.add("lightbox__close");
+	main.appendChild(closeBtn);
+
+	thumbnailImgs.classList.add("lightbox");
+	slider.classList.add("lightbox");
+	document.querySelector(".overlay").style.display = "block";
+	document.body.style.overflowY = "hidden";
+
+	closeBtn.addEventListener("click", lightboxOff);
+}
+
+function lightboxOff() {
+	isLightboxOn = false;
+	const lightboxElements = document.querySelectorAll(".lightbox");
+	document.querySelector(".overlay").style.display = "none";
+	lightboxElements.forEach((el) => el.classList.remove("lightbox"));
 }
 
 function quantityHandler(e, action) {
@@ -167,8 +182,8 @@ function updateCart() {
 	const cartQuantity = cart.querySelector(".cart__full__prod-quantity");
 	const cartTotalPrice = cart.querySelector(".cart__full__prod-total");
 	const cartProdImg = cart.querySelector(".cart__full__prod-img");
-	const imgNum = getImgNum(currentImage, false);
-	const src = `images/image-product-${imgNum}-thumbnail.jpg`;
+
+	const src = `images/image-product-${currentImageIndex + 1}-thumbnail.jpg`;
 	cartProdImg.innerHTML = `<img src=${src} />`;
 
 	cartProdName.textContent = data.title;
@@ -186,13 +201,18 @@ function addToCartHandler() {
 }
 
 function handleProductImages(e) {
-	console.log("handleProductImages");
 	const mainImg = document.querySelector(".prod-images__active img");
+	const sliderContainer = document.getElementById("slider__container");
 	thumbnails.forEach((img) => img.classList.remove("active"));
 	e.currentTarget.classList.add("active");
-	const chosenImgNum = getImgNum(e.target, true);
-	mainImg.src = `images/image-product-${chosenImgNum}.jpg`;
-	currentImage = mainImg;
+	const chosenImgIndex = data.images_thumbnail.findIndex(
+		(img) => img === e.target.src.substring(e.target.src.indexOf("images/"))
+	);
+	currentImageIndex = chosenImgIndex;
+	const src = data.images[currentImageIndex];
+	if (isLightboxOn) sliderContainer.innerHTML = `<img src=${src} />`;
+	else mainImg.src = src;
+
 	updateCart();
 }
 
@@ -203,33 +223,28 @@ function deleteItemFromCart() {
 	updateCart();
 }
 
-function getImgNum(img, isThumbnail) {
-	if (img) {
-		const index = isThumbnail
-			? img.src.indexOf("-thumbnail") - 1
-			: img.src.lastIndexOf(".") - 1;
-		return img.src.charAt(index);
-	}
-	return 1;
+function createCloseBtn() {
+	const closeBtn = document.createElement("button");
+	closeBtn.textContent = "X";
+	return closeBtn;
 }
 
 window.onload = async function () {
 	data = await fetchData();
-	console.log(data);
 	priceAfterDiscount = data.price * (data.discount / 100);
 	loadSliderImgs();
 	loadProdImgs();
 	loadProductPage();
 	updateQuantityInCart();
 	updateCart();
+
+	lightboxOn();
 };
 
 openMenuBtn.addEventListener("click", openNav);
 
-if (btnSliderNext && btnSliderPrev) {
-	btnSliderNext.addEventListener("click", (e) => sliderHandler(e, "next"));
-	btnSliderPrev.addEventListener("click", (e) => sliderHandler(e, "prev"));
-}
+btnSliderNext.addEventListener("click", (e) => sliderHandler(e, "next"));
+btnSliderPrev.addEventListener("click", (e) => sliderHandler(e, "prev"));
 
 btnMinus.addEventListener("click", (e) => quantityHandler(e, "minus"));
 btnPlus.addEventListener("click", (e) => quantityHandler(e, "plus"));
