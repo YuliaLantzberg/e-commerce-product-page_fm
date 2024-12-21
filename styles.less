@@ -226,12 +226,14 @@ input[type="number"] {
 					color: @blue-900;
 					cursor: pointer;
 
-					&:hover {
-						text-decoration: underline;
-						text-decoration-color: @orange-500;
-						text-underline-offset: 2.2rem;
-						text-decoration-thickness: 5px;
-						z-index: 10;
+					@media (min-width: 60rem) {
+						&:hover {
+							text-decoration: underline;
+							text-decoration-color: @orange-500;
+							text-underline-offset: 2.2rem;
+							text-decoration-thickness: 5px;
+							z-index: 10;
+						}
 					}
 				}
 			}
