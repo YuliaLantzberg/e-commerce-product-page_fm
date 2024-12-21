@@ -1,6 +1,6 @@
-# Frontend Mentor - Fontend Quiz app solution
+# Frontend Mentor - E-Commerce Product Page solution
 
-This is a solution to the [Frontend Quiz app challenge on Frontend Mentor]https://www.frontendmentor.io/challenges/frontend-quiz-app-BE7xkzXQnU). Frontend Mentor challenges help you improve your coding skills by building realistic projects.
+This is a solution to the [Frontend Quiz app challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/ecommerce-product-page-UPsZ9MJp6). Frontend Mentor challenges help you improve your coding skills by building realistic projects.
 
 ## Table of contents
 
@@ -19,26 +19,23 @@ This is a solution to the [Frontend Quiz app challenge on Frontend Mentor]https:
 
 Users should be able to:
 
-- Select a quiz subject
-- Select a single answer from each question from a choice of four
-- See an error message when trying to submit an answer without making a selection
-- See if they have made a correct or incorrect choice when they submit an answer
-- Move on to the next question after seeing the question result
-- See a completed state with the score after the final question
-- Play again to choose another subject
-- View the optimal layout for the interface depending on their device's screen size
-- See hover and focus states for all interactive elements on the page
-- Navigate the entire app only using their keyboard
-- Change the app's theme between light and dark
+- Open a lightbox gallery by clicking on the large product image
+- Switch the large product image by clicking on the small thumbnail images
+- Increase or reduce the quantity of the items
+- To see the updated quantity of items in cart on the preview icon
+- Add items to the cart
+- View the cart and remove items from it
+- View the optimal layout for the site depending on their device's screen size
+- See hover states for all interactive elements on the page
 
 ### Screenshot
 
-![](assets/images/screenshot.png)
+![](images/screenshot.png)
 
 ### Links
 
-- Solution URL: [Add solution URL here](https://github.com/YuliaLantzberg/frontend-quiz_fm)
-- Live Site URL: [Add live site URL here](https://yulialantzberg.github.io/frontend-quiz_fm/)
+- Solution URL: [Add solution URL here](https://github.com/YuliaLantzberg/e-commerce-product-page_fm)
+- Live Site URL: [Add live site URL here](https://yulialantzberg.github.io/e-commerce-product-page_fm/)
 
 ## My process
 
