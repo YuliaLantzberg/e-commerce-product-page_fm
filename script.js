@@ -238,8 +238,6 @@ window.onload = async function () {
 	loadProductPage();
 	updateQuantityInCart();
 	updateCart();
-
-	lightboxOn();
 };
 
 openMenuBtn.addEventListener("click", openNav);
